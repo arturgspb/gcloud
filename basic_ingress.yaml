@@ -24,3 +24,10 @@ spec:
         backend:
           serviceName: my-app-t2-service
           servicePort: 8080
+  - host: qrcode.gcloud.1ad.ru
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: qrcode-service
+          servicePort: 8080
