@@ -1,0 +1,26 @@
+# https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  labels:
+    app: my-app
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: my-app-ip
+spec:
+  rules:
+  - host: t1.gcloud.1ad.ru
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: my-app-service
+          servicePort: 8080
+  - host: t2.gcloud.1ad.ru
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: my-app-t2-service
+          servicePort: 8080
