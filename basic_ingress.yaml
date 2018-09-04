@@ -31,3 +31,10 @@ spec:
         backend:
           serviceName: qrcode-service
           servicePort: 8080
+  - host: grpc-test.gcloud.1ad.ru
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: grpc-test-service
+          servicePort: 9000
