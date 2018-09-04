@@ -18,13 +18,17 @@ spec:
     targetPort: 9001
     protocol: TCP
     name: grpc
+  - port: 8090
+    targetPort: 8090
+    protocol: TCP
+    name: espstatus
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: grpc-test
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -37,7 +41,7 @@ spec:
         args: [
           "--http_port=9000",
           "--http2_port=9001",
-          "--healthz=/healthz",
+          "--healthz=/",
           "--backend=grpc://127.0.0.1:50051",
           "--service=bookstore.endpoints.meta-test-164215.cloud.goog",
           "--rollout_strategy=managed",
@@ -45,11 +49,12 @@ spec:
         ports:
           - containerPort: 9000
           - containerPort: 9001
+          - containerPort: 8090
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /health
             port: 9000
       - name: grpc-test-app
-        image: eu.gcr.io/meta-test-164215/grpc-test--v1:v1.1
+        image: eu.gcr.io/meta-test-164215/grpc-test--v1:v1.2
         ports:
         - containerPort: 50051
